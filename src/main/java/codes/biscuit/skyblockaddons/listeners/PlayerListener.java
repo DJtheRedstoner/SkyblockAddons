@@ -131,6 +131,7 @@ public class PlayerListener {
                 IslandWarpGui.setDoubleWarpMarker(null);
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp "+doubleWarpMarker.getWarpName());
             }
+            BrewingStandTimerManager.reset();
         }
     }
 

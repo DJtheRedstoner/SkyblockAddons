@@ -58,6 +58,10 @@ public class BrewingStandTimerManager {
         });
     }
 
+    public static void reset() {
+        brewingStands.clear();
+    }
+
     public static void onTick() {
         brewingStands.forEach((pos, time) -> {
             time -= 0.05F;
