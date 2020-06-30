@@ -295,6 +295,10 @@ public class PlayerListener {
             } else if (EnchantedItemBlacklist.shouldBlockUsage(heldItem, e.action)) {
                 e.setCanceled(true);
             }
+
+            if (e.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+                BrewingStandTimerManager.onRightClickBlock(e.pos);
+            }
         }
     }
 
@@ -385,6 +389,9 @@ public class PlayerListener {
 
                 } else if (timerTick > 20) { // To keep the timer going from 1 to 21 only.
                     timerTick = 1;
+                }
+                if(main.getUtils().isOnSkyblock()) {
+                    BrewingStandTimerManager.onTick();
                 }
             }
         }
@@ -786,6 +793,7 @@ public class PlayerListener {
         if (e.gui == null && GuiChest.class.equals(lastOpenedInventory)) {
             lastClosedInv = System.currentTimeMillis();
             lastOpenedInventory = null;
+            BrewingStandTimerManager.onClose();
         }
         if (e.gui != null) {
             lastOpenedInventory = e.gui.getClass();
@@ -802,6 +810,7 @@ public class PlayerListener {
                         }
                     }
                 }
+                BrewingStandTimerManager.setLastOpenChest((GuiChest) e.gui);
             }
         }
     }

@@ -17,6 +17,8 @@ import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -42,6 +44,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -1050,5 +1053,48 @@ public class Utils {
         }
 
         return isLoaded;
+    }
+
+    public Vector3f getRenderPos(float x, float y, float z, float partialTicks) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP player = mc.thePlayer;
+        return new Vector3f(
+                x - (float)(player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks),
+                y - (float)(player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks),
+                z - (float)(player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks)
+        );
+    }
+
+    public void renderNameTag(String text, float x, float y, float z, Color color, float partialTicks) {
+        Minecraft mc = Minecraft.getMinecraft();
+
+        Vector3f pos = getRenderPos(x, y, z, partialTicks);
+
+        FontRenderer fontrenderer = mc.fontRendererObj;
+        float f = 1.6F;
+        float f1 = 0.016666668F * f;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float)pos.x, (float)pos.y, (float)pos.z);
+        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(-f1, -f1, f1);
+        enableStandardGLOptions();
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        int i = 0;
+        int j = fontrenderer.getStringWidth(text) / 2;
+        GlStateManager.disableTexture2D();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos((double)(-j - 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(-j - 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(j + 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        worldrenderer.pos((double)(j + 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        fontrenderer.drawString(text, -j, i, color.getRGB());
+        restoreGLOptions();
+        GlStateManager.popMatrix();
+
     }
 }

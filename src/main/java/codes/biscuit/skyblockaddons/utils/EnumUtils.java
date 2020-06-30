@@ -81,7 +81,8 @@ public class EnumUtils {
         ENCHANTMENT_TABLE(INVENTORY_TYPE_ENCHANTS, "Enchant Item"),
         REFORGE_ANVIL(INVENTORY_TYPE_REFORGES, "Reforge Item"),
         BAKER(null, "Baker"),
-        CRAFTING_TABLE(INVENTORY_TYPE_CRAFTING, CraftingPattern.CRAFTING_TABLE_DISPLAYNAME);
+        CRAFTING_TABLE(INVENTORY_TYPE_CRAFTING, CraftingPattern.CRAFTING_TABLE_DISPLAYNAME),
+        BREWING_STAND(null, "Brewing Stand");
 
         /** The current inventory type. Can be null. */
         @Getter private static InventoryType currentInventoryType;
@@ -297,7 +298,7 @@ public class EnumUtils {
         P0KE("P0ke", "p0ke.dev", Feature.ZEALOT_COUNTER),
         BERISAN("Berisan", "github.com/Berisan", Feature.TAB_EFFECT_TIMERS),
         MYNAMEISJEFF("MyNameIsJeff", "github.com/My-Name-Is-Jeff", Feature.SHOW_BROKEN_FRAGMENTS),
-        DJTHEREDSTONER("DJtheRedstoner", "github.com/DJtheRedstoner", Feature.LEGENDARY_SEA_CREATURE_WARNING, Feature.HIDE_SVEN_PUP_NAMETAGS),
+        DJTHEREDSTONER("DJtheRedstoner", "github.com/DJtheRedstoner", Feature.LEGENDARY_SEA_CREATURE_WARNING, Feature.HIDE_SVEN_PUP_NAMETAGS, Feature.SHOW_TIME_REMAINING_ABOVE_BREWING_STANDS),
         ANTONIO32A("Antonio32A", "github.com/Antonio32A", Feature.ONLY_BREAK_LOGS_PARK),
         CHARZARD("Charzard4261", "github.com/Charzard4261", Feature.DISABLE_TELEPORT_PAD_MESSAGES, Feature.BAIT_LIST);
 

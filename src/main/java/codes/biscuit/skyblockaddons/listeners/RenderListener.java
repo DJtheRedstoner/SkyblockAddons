@@ -1,10 +1,7 @@
 package codes.biscuit.skyblockaddons.listeners;
 
 import codes.biscuit.skyblockaddons.SkyblockAddons;
-import codes.biscuit.skyblockaddons.core.Attribute;
-import codes.biscuit.skyblockaddons.core.Feature;
-import codes.biscuit.skyblockaddons.core.Location;
-import codes.biscuit.skyblockaddons.core.Message;
+import codes.biscuit.skyblockaddons.core.*;
 import codes.biscuit.skyblockaddons.gui.IslandWarpGui;
 import codes.biscuit.skyblockaddons.gui.LocationEditGui;
 import codes.biscuit.skyblockaddons.gui.SettingsGui;
@@ -32,6 +29,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.client.GuiNotification;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -141,6 +139,13 @@ public class RenderListener {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderWorld(RenderWorldLastEvent e) {
+        if(main.getUtils().isOnSkyblock() && main.getConfigValues().isEnabled(Feature.SHOW_TIME_REMAINING_ABOVE_BREWING_STANDS)) {
+            BrewingStandTimerManager.onRender(e.partialTicks);
         }
     }
 
