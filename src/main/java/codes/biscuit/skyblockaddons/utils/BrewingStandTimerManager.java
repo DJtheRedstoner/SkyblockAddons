@@ -22,7 +22,14 @@ public class BrewingStandTimerManager {
     private static BlockPos lastBrewingStand;
     private static final Color GREEN = new Color(0, 195, 0);
     private static final Color RED = new Color(255, 0, 0);
+    private static int[] colorFade = new int[401];
     @Setter static GuiChest lastOpenChest;
+
+    static {
+        for(float i = 20; i >= 0; i -= 0.05F) {
+            colorFade[(int)(i*20)] = getColorSlow(i).getRGB();
+        }
+    }
 
     public static void onRightClickBlock(BlockPos pos) {
         Block block = Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
@@ -73,7 +80,7 @@ public class BrewingStandTimerManager {
         });
     }
 
-    public static Color getColor(float time) {
+    public static Color getColorSlow(float time) {
         if(time == 0) return GREEN;
         float p = 1 - time / 20;
         float[] hsb1 = Color.RGBtoHSB(RED.getRed(), RED.getGreen(), RED.getBlue(), null);
@@ -87,4 +94,7 @@ public class BrewingStandTimerManager {
         return new Color(Color.HSBtoRGB(hsb3[0], hsb3[1], hsb3[2]));
     }
 
+    public static Color getColor(float time) {
+        return new Color(colorFade[(int)(time * 20)]);
+    }
 }
