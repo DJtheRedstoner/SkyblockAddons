@@ -1,6 +1,7 @@
 package codes.biscuit.skyblockaddons.utils;
 
 import codes.biscuit.skyblockaddons.SkyblockAddons;
+import codes.biscuit.skyblockaddons.core.Feature;
 import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -61,7 +62,11 @@ public class BrewingStandTimerManager {
 
             String str = new DecimalFormat("#0.0's'").format(time);
 
+            if(SkyblockAddons.getInstance().getConfigValues().isDisabled(Feature.COLOR_BY_TIME_REMAINING)) {
+                ChromaManager.renderingText(Feature.SHOW_TIME_REMAINING_ABOVE_BREWING_STANDS);
+            }
             SkyblockAddons.getInstance().getUtils().renderNameTag(str, x + 0.5F, y + 1.0F, z + 0.5F, getColor(time), partialTicks);
+            ChromaManager.doneRenderingText();
         });
     }
 
@@ -95,6 +100,10 @@ public class BrewingStandTimerManager {
     }
 
     public static Color getColor(float time) {
-        return new Color(colorFade[(int)(time * 20)]);
+        if(SkyblockAddons.getInstance().getConfigValues().isEnabled(Feature.COLOR_BY_TIME_REMAINING)) {
+            return new Color(colorFade[(int) (time * 20)]);
+        } else {
+            return SkyblockAddons.getInstance().getConfigValues().getColor(Feature.SHOW_TIME_REMAINING_ABOVE_BREWING_STANDS);
+        }
     }
 }

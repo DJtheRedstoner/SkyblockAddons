@@ -131,6 +131,7 @@ public enum Message {
     SETTING_HIDE_SVEN_PUP_NAMETAGS(MessageObject.SETTING, "hideSvenPupNametags"),
     SETTING_TURN_ALL_FEATURES_CHROMA(MessageObject.SETTING, "turnAllFeaturesChroma"),
     SETTING_SHOW_TIME_REMAINING_ABOVE_BREWING_STANDS(MessageObject.SETTING, "showTimeRemainingAboveBrewingStands"),
+    SETTING_COLOR_BY_TIME_REMAINING(MessageObject.SETTING, "colorByTimeRemaining"),
 
     BACKPACK_STYLE_REGULAR(MessageObject.BACKPACK_STYLE, "regular"),
     BACKPACK_STYLE_COMPACT(MessageObject.BACKPACK_STYLE, "compact"),

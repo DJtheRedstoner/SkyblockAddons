@@ -1069,32 +1069,34 @@ public class Utils {
         Minecraft mc = Minecraft.getMinecraft();
 
         Vector3f pos = getRenderPos(x, y, z, partialTicks);
+        double sqDistance = pos.x * pos.x + pos.y * pos.y + pos.z * pos.z;
 
-        FontRenderer fontrenderer = mc.fontRendererObj;
-        float f = 1.6F;
-        float f1 = 0.016666668F * f;
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)pos.x, (float)pos.y, (float)pos.z);
-        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(-f1, -f1, f1);
-        enableStandardGLOptions();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        int i = 0;
-        int j = fontrenderer.getStringWidth(text) / 2;
-        GlStateManager.disableTexture2D();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos((double)(-j - 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double)(-j - 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double)(j + 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        worldrenderer.pos((double)(j + 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        tessellator.draw();
-        GlStateManager.enableTexture2D();
-        fontrenderer.drawString(text, -j, i, color.getRGB());
-        restoreGLOptions();
-        GlStateManager.popMatrix();
-
+        if(sqDistance <= (double)(64 * 64)) {
+            FontRenderer fontrenderer = mc.fontRendererObj;
+            float f = 1.6F;
+            float f1 = 0.016666668F * f;
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(pos.x, pos.y, pos.z);
+            GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+            GlStateManager.scale(-f1, -f1, f1);
+            enableStandardGLOptions();
+            Tessellator tessellator = Tessellator.getInstance();
+            WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+            int i = 0;
+            int j = fontrenderer.getStringWidth(text) / 2;
+            GlStateManager.disableTexture2D();
+            worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            worldrenderer.pos(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            worldrenderer.pos(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            worldrenderer.pos(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            tessellator.draw();
+            GlStateManager.enableTexture2D();
+            drawTextWithStyle(text, -j, i, color.getRGB());
+            restoreGLOptions();
+            GlStateManager.popMatrix();
+        }
     }
 }

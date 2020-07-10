@@ -130,7 +130,8 @@
     "changeZealotColor": "Change Zealot Color",
     "hideSvenPupNametags": "Hide Sven Pup Nametags",
     "turnAllFeaturesChroma": "Turn All Features Chroma",
-    "showTimeRemainingAboveBrewingStands": "Show Time Remaining Above Brewing Stands"
+    "showTimeRemainingAboveBrewingStands": "Show Time Remaining Above Brewing Stands",
+    "colorByTimeRemaining": "Color By Time Remaining"
   },
   "messages": {
     "dropConfirmation": "Drop this item again to confirm!",
